@@ -16,11 +16,13 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class TelaPrincipal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseUser usuario;
+    private FirebaseDatabase data;
 
 
     @Override
@@ -38,8 +40,10 @@ public class TelaPrincipal extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                usuario = FirebaseAuth.getInstance().getCurrentUser();
+                data = FirebaseDatabase.getInstance();
+                Firebase firebase = new Firebase(usuario,data);
+                firebase.cadastrarTarefaDiaria("06-04-2017","Estudar para prova",10);
             }
         });
 

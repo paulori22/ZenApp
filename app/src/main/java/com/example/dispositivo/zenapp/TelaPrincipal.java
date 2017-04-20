@@ -36,14 +36,17 @@ public class TelaPrincipal extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton add_tarefa = (FloatingActionButton) findViewById(R.id.add_tarefa);
+        add_tarefa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 usuario = FirebaseAuth.getInstance().getCurrentUser();
                 data = FirebaseDatabase.getInstance();
                 Firebase firebase = new Firebase(usuario,data);
                 firebase.cadastrarTarefaDiaria("06-04-2017","Estudar para prova",10);
+
+                Intent CadastrarTarefa = new Intent(getApplicationContext(),CadastrarTarefa.class);
+                startActivity(CadastrarTarefa);
             }
         });
 

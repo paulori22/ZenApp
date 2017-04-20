@@ -43,7 +43,8 @@ public class TelaPrincipal extends AppCompatActivity
                 usuario = FirebaseAuth.getInstance().getCurrentUser();
                 data = FirebaseDatabase.getInstance();
                 Firebase firebase = new Firebase(usuario,data);
-                firebase.cadastrarTarefaDiaria("06-04-2017","Estudar para prova",10);
+                //Criar classe e passar para o firesebase
+                //firebase.cadastrarTarefaDiaria("06-04-2017","Estudar para prova",10);
 
                 Intent CadastrarTarefa = new Intent(getApplicationContext(),CadastrarTarefa.class);
                 startActivity(CadastrarTarefa);

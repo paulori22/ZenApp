@@ -13,10 +13,10 @@ public class CadastrarTarefa extends AppCompatActivity {
     private ArrayList<Object> getSampleArrayList()
     {
         ArrayList<Object> items = new ArrayList<>();
-        items.add(new TextButtonModel("textbut1","but1111", "aaaa"));
-        items.add(new TextTextModel("ushaushuahs","text222"));
-        items.add(new TextTextModel("voxe e xafado","lixemburg"));
-        items.add(new TextButtonModel("textbut1","but1111", "bbbb"));
+        items.add(new TextButtonModel("add","Data", "Hora"));
+        items.add(new TextTextModel("u      s","       "));
+        items.add(new TextTextModel("voxe e xafado","lindemburg"));
+        items.add(new TextButtonModel("textbut1","Data", "Hora"));
 
         return items;
     }

@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
-import android.text.Layout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,20 +12,32 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.EditText;
+import android.widget.Toast;
 
+import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class TelaPrincipal extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+import java.util.List;
 
+public class TelaPrincipal extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener,ClickRecyclerView_Interface {
+
+    int e = 0;
     private FirebaseUser usuario;
     private FirebaseDatabase data;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    RecyclerTesteAdapter adapter;
+    private List<Tarefa> tarefasListas = new ArrayList<>();
+    private FloatingActionButton floatingActionButton;
+    private RecyclerView.OnItemTouchListener onItemTouchListener;
 
     // UI references.
 
@@ -39,12 +50,19 @@ public class TelaPrincipal extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_principal);
 
+        setaRecyclerView();
+        setaButtons();
+        setatouch();
+        listenersButtons();
+        listenersSwipeable();
+
         usuario = FirebaseAuth.getInstance().getCurrentUser();
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+//comentando para nao sobreescrever o floatbutton do recyclerviewr
+/*
         FloatingActionButton add_tarefa = (FloatingActionButton) findViewById(R.id.add_tarefa);
         add_tarefa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +77,7 @@ public class TelaPrincipal extends AppCompatActivity
                 startActivity(CadastrarTarefa);
             }
         });
+        */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -134,4 +153,103 @@ public class TelaPrincipal extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onCustomClick(Object object) {
+        Tarefa tarefa = (Tarefa) object;
+        String nome = tarefa.getTitulo();
+        String Descricao = tarefa.getDescricao();
+        Toast.makeText(TelaPrincipal.this, nome , Toast.LENGTH_SHORT).show();
+    }
+
+    public void setaRecyclerView() {
+
+        //Aqui é instanciado o Recyclerview
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_recyclerteste);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        adapter = new RecyclerTesteAdapter(this, tarefasListas, this);
+        mRecyclerView.setAdapter(adapter);
+    }
+
+    public void setaButtons() {
+
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.add_tarefa);
+
+
+    }
+
+
+
+    public void setatouch() {
+
+        onItemTouchListener = (RecyclerView.OnItemTouchListener) findViewById(R.id.card_view);
+
+
+    }
+
+    public void listenersButtons() {
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Tarefa tarefanew = new Tarefa();
+                tarefanew.setTitulo("Tarefa" + e);
+                tarefanew.setDescricao("Descricao" + e);
+                e++;
+
+                //Adiciona a pessoa1 e avisa o adapter que o conteúdo
+                //da lista foi alterado
+                tarefasListas.add(tarefanew);
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+
+
+    }
+
+    public void listenersSwipeable() {
+
+        SwipeableRecyclerViewTouchListener swipeTouchListener =
+                new SwipeableRecyclerViewTouchListener(mRecyclerView,
+                        new SwipeableRecyclerViewTouchListener.SwipeListener() {
+                            @Override
+                            public boolean canSwipeLeft(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public boolean canSwipeRight(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    Toast.makeText(TelaPrincipal.this, tarefasListas.get(position).getTitulo() + " swiped left", Toast.LENGTH_SHORT).show();
+                                    tarefasListas.remove(position);
+                                    adapter.notifyItemRemoved(position);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    Toast.makeText(TelaPrincipal.this, tarefasListas.get(position).getTitulo() + " swiped right", Toast.LENGTH_SHORT).show();
+                                    tarefasListas.remove(position);
+                                    adapter.notifyItemRemoved(position);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+
+                        });
+
+        mRecyclerView.addOnItemTouchListener(swipeTouchListener);
+    }
+
+
 }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
+import android.text.Layout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +27,11 @@ public class TelaPrincipal extends AppCompatActivity
 
     private FirebaseUser usuario;
     private FirebaseDatabase data;
+
+    // UI references.
+
+    private TextView NomeView;
+    private TextView EmailView;
 
 
     @Override
@@ -75,6 +84,10 @@ public class TelaPrincipal extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.tela_principal, menu);
+        NomeView = (TextView) findViewById(R.id.nome_usuario);
+        NomeView.setText("Bem-vindo usuário");
+        EmailView = (TextView) findViewById(R.id.email_usuario);
+        EmailView.setText(usuario.getEmail());
         return true;
     }
 

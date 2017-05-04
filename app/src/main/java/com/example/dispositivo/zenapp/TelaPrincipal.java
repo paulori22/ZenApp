@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,7 +30,9 @@ import java.util.List;
 public class TelaPrincipal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ClickRecyclerView_Interface {
 
+    int del = 0;
     int e = 0;
+    Tarefa retorna;
     private FirebaseUser usuario;
     private FirebaseDatabase data;
     private RecyclerView mRecyclerView;
@@ -212,7 +215,6 @@ public class TelaPrincipal extends AppCompatActivity
     }
 
     public void listenersSwipeable() {
-
         SwipeableRecyclerViewTouchListener swipeTouchListener =
                 new SwipeableRecyclerViewTouchListener(mRecyclerView,
                         new SwipeableRecyclerViewTouchListener.SwipeListener() {
@@ -228,8 +230,24 @@ public class TelaPrincipal extends AppCompatActivity
 
                             @Override
                             public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
-                                for (int position : reverseSortedPositions) {
+
+                                for (final int position : reverseSortedPositions) {
                                     Toast.makeText(TelaPrincipal.this, tarefasListas.get(position).getTitulo() + " swiped left", Toast.LENGTH_SHORT).show();
+                                    Snackbar snackbar = Snackbar
+                                            .make(mRecyclerView, "Desfazer Delete", Snackbar.LENGTH_LONG)
+                                            .setAction("UNDO", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de delete desfeita", Snackbar.LENGTH_SHORT);
+                                                    snackbar1.show();
+                                                    tarefasListas.add(del,retorna);
+                                                    adapter.notifyDataSetChanged();
+
+                                                }
+                                            });
+                                    snackbar.show();
+                                    retorna=tarefasListas.get(position);
+                                    del=position;
                                     tarefasListas.remove(position);
                                     adapter.notifyItemRemoved(position);
                                 }
@@ -240,6 +258,21 @@ public class TelaPrincipal extends AppCompatActivity
                             public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
                                     Toast.makeText(TelaPrincipal.this, tarefasListas.get(position).getTitulo() + " swiped right", Toast.LENGTH_SHORT).show();
+                                    Snackbar snackbar = Snackbar
+                                            .make(mRecyclerView, "Desfazer Delete", Snackbar.LENGTH_LONG)
+                                            .setAction("UNDO", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de delete desfeita", Snackbar.LENGTH_SHORT);
+                                                    snackbar1.show();
+                                                    tarefasListas.add(del,retorna);
+                                                    adapter.notifyDataSetChanged();
+
+                                                }
+                                            });
+                                    snackbar.show();
+                                    retorna=tarefasListas.get(position);
+                                    del=position;
                                     tarefasListas.remove(position);
                                     adapter.notifyItemRemoved(position);
                                 }

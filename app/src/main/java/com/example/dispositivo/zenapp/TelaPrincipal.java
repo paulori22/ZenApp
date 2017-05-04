@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.design.widget.CoordinatorLayout;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -31,10 +32,11 @@ public class TelaPrincipal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ClickRecyclerView_Interface {
 
     int del = 0;
-    int e = 0;
+    int id = 0;
     Tarefa retorna;
     private FirebaseUser usuario;
     private FirebaseDatabase data;
+    private Firebase bd;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     RecyclerTesteAdapter adapter;
@@ -60,6 +62,8 @@ public class TelaPrincipal extends AppCompatActivity
         listenersSwipeable();
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
+        data = FirebaseDatabase.getInstance();
+        bd = new Firebase(usuario,data);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -199,9 +203,12 @@ public class TelaPrincipal extends AppCompatActivity
             public void onClick(View v) {
 
                 Tarefa tarefanew = new Tarefa();
-                tarefanew.setTitulo("Tarefa" + e);
-                tarefanew.setDescricao("Descricao" + e);
-                e++;
+                tarefanew.setTitulo("Tarefa" + id);
+                tarefanew.setDescricao("Descricao" + id);
+                tarefanew.setId(String.valueOf(id));
+                bd.cadastrarTarefaDiaria(tarefanew);
+                bd.retornaTarefaDiaria();
+                id++;
 
                 //Adiciona a pessoa1 e avisa o adapter que o conteúdo
                 //da lista foi alterado
@@ -248,6 +255,8 @@ public class TelaPrincipal extends AppCompatActivity
                                     snackbar.show();
                                     retorna=tarefasListas.get(position);
                                     del=position;
+                                    //Log.e("Deletar tarefa","id = "+ position + "Tarefa: " + tarefasListas.get(position).getTitulo());
+                                    bd.removerTarefaDiaria(tarefasListas.get(position));
                                     tarefasListas.remove(position);
                                     adapter.notifyItemRemoved(position);
                                 }
@@ -273,6 +282,8 @@ public class TelaPrincipal extends AppCompatActivity
                                     snackbar.show();
                                     retorna=tarefasListas.get(position);
                                     del=position;
+                                    Log.e("Deletar tarefa","id = "+ position + "Tarefa: " + tarefasListas.get(position).getTitulo());
+                                    bd.removerTarefaDiaria(tarefasListas.get(position));
                                     tarefasListas.remove(position);
                                     adapter.notifyItemRemoved(position);
                                 }

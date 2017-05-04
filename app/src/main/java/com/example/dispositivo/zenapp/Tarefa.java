@@ -5,12 +5,14 @@ package com.example.dispositivo.zenapp;
  */
 
 public class Tarefa {
-
+    private String id;
     private String titulo;
     private String descricao;
     private String tag;
 
+
     public Tarefa() {
+
 
     }
 
@@ -42,5 +44,13 @@ public class Tarefa {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

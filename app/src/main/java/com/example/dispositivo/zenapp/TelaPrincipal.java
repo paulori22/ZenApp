@@ -36,7 +36,6 @@ public class TelaPrincipal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ClickRecyclerView_Interface {
 
     int del = 0;
-    int id = 0;
     Tarefa retorna;
     private FirebaseUser usuario;
     private FirebaseDatabase data;
@@ -314,6 +313,7 @@ public class TelaPrincipal extends AppCompatActivity
                                                     Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de delete desfeita", Snackbar.LENGTH_SHORT);
                                                     snackbar1.show();
                                                     tarefasListas.add(del,retorna);
+                                                    bd.cadastrarTarefaDiaria(retorna);
                                                     adapter.notifyDataSetChanged();
 
                                                 }

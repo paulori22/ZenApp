@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private static final String TAG = "LoginFirebase";
-    private static final String TAG_Email_Password ="Email/Pass Auth";
+    private static final String TAG_Email_Password = "Email/Pass Auth";
 
     /**
      * Id to identity READ_CONTACTS permission request.

@@ -2,6 +2,7 @@ package com.example.dispositivo.zenapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -251,7 +253,8 @@ public class TelaPrincipal extends AppCompatActivity
                 //da lista foi alterado
                 tarefasListas.add(tarefanew);
                 adapter.notifyDataSetChanged();*/
-                Intent CadastrarTarefa = new Intent(getApplicationContext(),CadastrarTarefa.class);
+                Intent CadastrarTarefa = new Intent(getApplicationContext(), CadastrarTarefa.class);
+                CadastrarTarefa.putExtra("com.example.dispositivo.zenapp.ShowAll",String.valueOf(tarefasListas.size()));
                 startActivity(CadastrarTarefa);
 
             }

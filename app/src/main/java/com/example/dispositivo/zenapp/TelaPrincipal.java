@@ -241,7 +241,7 @@ public class TelaPrincipal extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                Tarefa tarefanew = new Tarefa();
+                /*Tarefa tarefanew = new Tarefa();
                 tarefanew.setTitulo("Tarefa" + tarefasListas.size());
                 tarefanew.setDescricao("Descricao" + tarefasListas.size());
                 tarefanew.setId(String.valueOf(tarefasListas.size()));
@@ -250,7 +250,9 @@ public class TelaPrincipal extends AppCompatActivity
                 //Adiciona a pessoa1 e avisa o adapter que o conteúdo
                 //da lista foi alterado
                 tarefasListas.add(tarefanew);
-                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();*/
+                Intent CadastrarTarefa = new Intent(getApplicationContext(),CadastrarTarefa.class);
+                startActivity(CadastrarTarefa);
 
             }
         });

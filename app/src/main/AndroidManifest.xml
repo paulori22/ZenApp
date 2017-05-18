@@ -45,7 +45,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.dispositivo.zenapp.LoginActivity" />
         </activity>
-        <activity android:name=".CadastrarTarefa"></activity>
+        <activity
+            android:name="CadastrarTarefa"
+            android:label="@string/title_activity_cadastrar_tarefa"
+            android:parentActivityName=".TelaPrincipal"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

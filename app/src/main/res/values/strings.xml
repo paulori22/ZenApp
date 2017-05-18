@@ -13,6 +13,7 @@
     <string name="permission_rationale">"Permitir contatos é necessário para completar automaticamente o email."
     </string>
     <string name="title_activity_tela_principal">TelaPrincipal</string>
+    <string name="title_activity_cadastrar_tarefa">Cadastrar Tarefa</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

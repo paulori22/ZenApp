@@ -51,8 +51,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         c.set(ano,mes,dia);
         Button b = (Button) v.findViewById(R.id.button1);
         SimpleDateFormat format = new SimpleDateFormat("EEE ',' dd 'de' MMM 'de' yyyy");
+        SimpleDateFormat format2 = new SimpleDateFormat("dd'-'mm'-'yyyy");
         String data = format.format(c.getTime());
-        b.setText(data);
+        String data2 = format2.format(c.getTime());
+        b.setText(data2);
     }
 
 }

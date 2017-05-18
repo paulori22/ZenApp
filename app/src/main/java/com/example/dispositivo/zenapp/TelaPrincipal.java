@@ -23,7 +23,11 @@ import android.widget.Toast;
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +44,7 @@ public class TelaPrincipal extends AppCompatActivity
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     RecyclerTesteAdapter adapter;
-    private List<Tarefa> tarefasListas = new ArrayList<>();
+    private List<Tarefa> tarefasListas = new ArrayList<Tarefa>();
     private FloatingActionButton floatingActionButton;
     private RecyclerView.OnItemTouchListener onItemTouchListener;
 
@@ -61,9 +65,45 @@ public class TelaPrincipal extends AppCompatActivity
         listenersButtons();
         listenersSwipeable();
 
+
+
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         data = FirebaseDatabase.getInstance();
         bd = new Firebase(usuario,data);
+
+        DatabaseReference myRef = data.getReference("TDIARIA/" + usuario.getUid());
+
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+
+                for(DataSnapshot datachild: dataSnapshot.getChildren()) {
+                    Tarefa novo = new Tarefa();
+                    novo = datachild.getValue(Tarefa.class);
+                    //novo.setId(datachild.getKey());
+
+                    Log.e("PEGANDO VALOR DO BD "," id = " + novo.getId() + "  titulo = " + novo.getTitulo());
+                    tarefasListas.add(novo);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+        //bd.retornaTarefaDiaria();
+        //tarefasListas = bd.getTarefas();
+
+        //Log.e("BD- Tarefas: ","Numero tarefas: " + tarefasListas.size());
+
+
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -203,12 +243,10 @@ public class TelaPrincipal extends AppCompatActivity
             public void onClick(View v) {
 
                 Tarefa tarefanew = new Tarefa();
-                tarefanew.setTitulo("Tarefa" + id);
-                tarefanew.setDescricao("Descricao" + id);
-                tarefanew.setId(String.valueOf(id));
+                tarefanew.setTitulo("Tarefa" + tarefasListas.size());
+                tarefanew.setDescricao("Descricao" + tarefasListas.size());
+                tarefanew.setId(String.valueOf(tarefasListas.size()));
                 bd.cadastrarTarefaDiaria(tarefanew);
-                bd.retornaTarefaDiaria();
-                id++;
 
                 //Adiciona a pessoa1 e avisa o adapter que o conteúdo
                 //da lista foi alterado
@@ -248,6 +286,7 @@ public class TelaPrincipal extends AppCompatActivity
                                                     Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de delete desfeita", Snackbar.LENGTH_SHORT);
                                                     snackbar1.show();
                                                     tarefasListas.add(del,retorna);
+                                                    bd.cadastrarTarefaDiaria(retorna);
                                                     adapter.notifyDataSetChanged();
 
                                                 }

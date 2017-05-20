@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -74,7 +75,6 @@ public class TelaPrincipal extends AppCompatActivity
 
         DatabaseReference myRef = data.getReference("TDIARIA/" + usuario.getUid());
 
-
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -82,9 +82,7 @@ public class TelaPrincipal extends AppCompatActivity
 
 
                 for(DataSnapshot datachild: dataSnapshot.getChildren()) {
-                    Tarefa novo = new Tarefa();
-                    novo = datachild.getValue(Tarefa.class);
-                    //novo.setId(datachild.getKey());
+                    Tarefa novo = datachild.getValue(Tarefa.class);
 
                     Log.e("PEGANDO VALOR DO BD "," id = " + novo.getId() + "  titulo = " + novo.getTitulo());
                     tarefasListas.add(novo);
@@ -98,34 +96,9 @@ public class TelaPrincipal extends AppCompatActivity
             }
         });
 
-        //bd.retornaTarefaDiaria();
-        //tarefasListas = bd.getTarefas();
-
-        //Log.e("BD- Tarefas: ","Numero tarefas: " + tarefasListas.size());
-
-
-
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//comentando para nao sobreescrever o floatbutton do recyclerviewr
-/*
-        FloatingActionButton add_tarefa = (FloatingActionButton) findViewById(R.id.add_tarefa);
-        add_tarefa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                usuario = FirebaseAuth.getInstance().getCurrentUser();
-                data = FirebaseDatabase.getInstance();
-                Firebase firebase = new Firebase(usuario,data);
-                //Criar classe e passar para o firesebase
-                //firebase.cadastrarTarefaDiaria("06-04-2017","Estudar para prova",10);
-
-                Intent CadastrarTarefa = new Intent(getApplicationContext(),CadastrarTarefa.class);
-                startActivity(CadastrarTarefa);
-            }
-        });
-        */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -254,7 +227,7 @@ public class TelaPrincipal extends AppCompatActivity
                 tarefasListas.add(tarefanew);
                 adapter.notifyDataSetChanged();*/
                 Intent CadastrarTarefa = new Intent(getApplicationContext(), CadastrarTarefa.class);
-                CadastrarTarefa.putExtra("com.example.dispositivo.zenapp.ShowAll",String.valueOf(tarefasListas.size()));
+                CadastrarTarefa.putExtra("com.example.dispositivo.zenapp.id_tarefa",String.valueOf(tarefasListas.size()));
                 startActivity(CadastrarTarefa);
 
             }

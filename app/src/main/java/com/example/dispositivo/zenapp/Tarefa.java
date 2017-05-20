@@ -16,7 +16,8 @@ public class Tarefa {
 
     }
 
-    public Tarefa(String titulo, String descricao, String tag) {
+    public Tarefa(String id,String titulo, String descricao, String tag) {
+        this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.tag = tag;

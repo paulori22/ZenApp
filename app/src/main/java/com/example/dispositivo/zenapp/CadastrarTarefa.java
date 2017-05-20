@@ -46,9 +46,9 @@ public class CadastrarTarefa extends AppCompatActivity {
 
         setContentView(R.layout.activity_cadastrar_tarefa);
 
-        id = getIntent().getStringExtra("com.example.dispositivo.zenapp.ShowAll");
+        id = getIntent().getStringExtra("com.example.dispositivo.zenapp.id_tarefa");
 
-        Log.e("ID = ",this.id);
+        //Log.e("ID = ",this.id);
 
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
@@ -96,11 +96,9 @@ public class CadastrarTarefa extends AppCompatActivity {
             tagtype = adapter.getTag();
             timer = adapter.getTimer();
 
-            /*Tarefa tarefanew = new Tarefa();
-            tarefanew.setTitulo(nomeTarefa);
-            tarefanew.setDescricao(desc);
-            tarefanew.setId(String.valueOf(tarefasListas.size()));
-            bd.cadastrarTarefaDiaria(tarefanew);*/
+            Tarefa novaTarefa = new Tarefa(this.id,nomeTarefa,desc,tagtype);
+
+            bd.cadastrarTarefaDiaria(novaTarefa);
 
             Log.e("ID = ",this.id);
 

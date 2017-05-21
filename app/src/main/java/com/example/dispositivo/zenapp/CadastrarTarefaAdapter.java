@@ -30,7 +30,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
     String desc = "";
     int timernum = 0;
 
-    private final int TEXT = 0, BUTTON = 1, EDITTEXT = 2;
+    private final int TEXT = 0, TEXT2 = 1, EDITTEXT = 2;
 
     public CadastrarTarefaAdapter(FragmentManager manager, List<Object> items)
     {
@@ -51,9 +51,9 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                 View v1 = inflater.inflate(R.layout.layout_text_holder, viewGroup, false);
                 viewHolder = new TextTextHolder(v1);
                 break;
-            case BUTTON:
-                View v2 = inflater.inflate(R.layout.layout_button_holder, viewGroup, false);
-                viewHolder = new TextButtonHolder(v2);
+            case TEXT2:
+                View v2 = inflater.inflate(R.layout.layout_text2_holder, viewGroup, false);
+                viewHolder = new TextText2Holder(v2);
                 break;
             case EDITTEXT:
                 View v3 = inflater.inflate(R.layout.layout_edittext_holder, viewGroup, false);
@@ -72,7 +72,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
     {
         if(items.get(position) instanceof TextTextModel) return TEXT;
         else if(items.get(position) instanceof EditTextModel) return EDITTEXT;
-        else return BUTTON;
+        else return TEXT2;
     }
 
     @Override
@@ -85,9 +85,9 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                 TextTextHolder vh1 = (TextTextHolder) viewHolder;
                 configureTextTextHolder(vh1, position);
                 break;
-            case BUTTON:
-                TextButtonHolder vh2 = (TextButtonHolder) viewHolder;
-                configureTextButtonHolder(vh2, position);
+            case TEXT2:
+                TextText2Holder vh2 = (TextText2Holder) viewHolder;
+                configureTextText2Holder(vh2, position);
                 break;
             case EDITTEXT:
                 EditTextHolder vh3 = (EditTextHolder) viewHolder;
@@ -127,8 +127,17 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                             EditText ed = (EditText) dialogview.findViewById(R.id.editTextDialog);
                             TextView t = (TextView) v.findViewById(R.id.text2);
                             TextTextHolder holder = (TextTextHolder) viewHolder;
-                            configureTextTextHolder(holder, position, ed.getText().toString());
-                            nomeTarefa = ed.getText().toString();
+                            if(ed.getText().toString().matches(""))
+                            {
+                                configureTextTextHolder(holder, position, "Tarefa");
+                                nomeTarefa = "Tarefa";
+                            }
+                            else
+                            {
+                                configureTextTextHolder(holder, position, ed.getText().toString());
+                                nomeTarefa = ed.getText().toString();
+
+                            }
                             t.setText(holder.getLabel2().getText());
                             dialog.dismiss();
                         }
@@ -269,12 +278,19 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                         public void onClick(DialogInterface dialog, int id)
                         {
                             EditText ed = (EditText) dialogview.findViewById(R.id.editTextDialog);
-                            TextView t = (TextView) v.findViewById(R.id.text2);
-                            TextTextHolder holder = (TextTextHolder) viewHolder;
+                            TextView t = (TextView) v.findViewById(R.id.text4);
+                            TextText2Holder holder = (TextText2Holder) viewHolder;
 
-                            configureTextTextHolder(holder,position,ed.getText().toString());
-                            desc = ed.getText().toString();
-                            t.setText(holder.getLabel2().getText());
+                            if(ed.getText().toString().matches(""))
+                            {
+                                configureTextText2Holder(holder,position,"Desativado");
+                                desc = "Desativado";
+                            }
+                            else {
+                                configureTextText2Holder(holder, position, ed.getText().toString());
+                                desc = ed.getText().toString();
+                            }
+                            t.setText(holder.getLabel4().getText());
                             dialog.dismiss();
                         }
                     });
@@ -308,6 +324,24 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
         {
             vh1.getLabel1().setText(text.getText1());
             vh1.getLabel2().setText(a);
+        }
+    }
+
+    private void configureTextText2Holder(TextText2Holder vh2, int position) {
+        TextText2Model text = (TextText2Model) items.get(position);
+        if(text != null)
+        {
+            vh2.getLabel3().setText(text.getText3());
+            vh2.getLabel4().setText(text.getText4());
+        }
+    }
+
+    private void configureTextText2Holder(TextText2Holder vh2, int position, String a) {
+        TextText2Model text = (TextText2Model) items.get(position);
+        if(text != null)
+        {
+            vh2.getLabel3().setText(text.getText3());
+            vh2.getLabel4().setText(a);
         }
     }
 
@@ -354,7 +388,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
     private void getTimerIntFromRadioButton(RadioButtonModel rbm) {
         String s = rbm.getText().toString();
 
-        if(s == "Desativado") timernum = 0;
+        if(s.matches("Desativado")) timernum = 0;
         else
         {
             s = s.replace(" Minutos","");

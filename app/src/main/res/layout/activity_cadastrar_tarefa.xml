@@ -1,11 +1,12 @@
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.dispositivo.zenapp.CadastrarTarefa">
+    tools:context="com.example.dispositivo.zenapp.CadastrarTarefa"
+    android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <!--android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -18,14 +19,39 @@
             android:minHeight="?attr/actionBarSize">
         </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttoncancelar"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="63dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:text="cancelar"
+            android:textColor="@color/colorAccentText" />
+
+        <Button
+            android:id="@+id/buttonsalvar"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:text="salvar"
+            android:textColor="@color/colorAccentText" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvContacts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="?attr/actionBarSize" />
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

@@ -19,6 +19,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <color name="verdinho">#a0ffd5</color> "Nova cor para tela de introdução."
 
+
+    <!-- Novas cores para adição do app. -->
+
+    <color name="verdinho">#E7FFEF</color>
 </resources>

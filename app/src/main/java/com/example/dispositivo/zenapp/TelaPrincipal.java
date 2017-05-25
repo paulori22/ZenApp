@@ -75,15 +75,12 @@ public class TelaPrincipal extends AppCompatActivity
 
         DatabaseReference myRef = data.getReference("TDIARIA/" + usuario.getUid());
 
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-
+                tarefasListas.clear();
                 for(DataSnapshot datachild: dataSnapshot.getChildren()) {
                     Tarefa novo = datachild.getValue(Tarefa.class);
-
                     Log.e("PEGANDO VALOR DO BD "," id = " + novo.getId() + "  titulo = " + novo.getTitulo());
                     tarefasListas.add(novo);
                     adapter.notifyDataSetChanged();

@@ -1,6 +1,10 @@
 package com.example.dispositivo.zenapp;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
@@ -149,19 +153,11 @@ public class TelaPrincipal extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_diarias) {
+            // tarefas diariais
+        } else if (id == R.id.nav_semanais) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        } else if (id == R.id.nav_logout) {
+        }else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
             Intent Login = new Intent(getApplicationContext(),LoginActivity.class);
             startActivity(Login);
@@ -178,10 +174,7 @@ public class TelaPrincipal extends AppCompatActivity
         String nome = tarefa.getTitulo();
         String Descricao = tarefa.getDescricao();
 
-        //Toast.makeText(TelaPrincipal.this, nome , Toast.LENGTH_SHORT).show();
-        tarefa.setTitulo("atualizadissimo");
-        tarefa.setDescricao("boa garoto");
-        Toast.makeText(TelaPrincipal.this, "nome e descriçao atualizados" , Toast.LENGTH_SHORT).show();
+        Toast.makeText(TelaPrincipal.this, nome , Toast.LENGTH_SHORT).show();
     }
 
     public void setaRecyclerView() {
@@ -217,16 +210,6 @@ public class TelaPrincipal extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                /*Tarefa tarefanew = new Tarefa();
-                tarefanew.setTitulo("Tarefa" + tarefasListas.size());
-                tarefanew.setDescricao("Descricao" + tarefasListas.size());
-                tarefanew.setId(String.valueOf(tarefasListas.size()));
-                bd.cadastrarTarefaDiaria(tarefanew);
-
-                //Adiciona a pessoa1 e avisa o adapter que o conteúdo
-                //da lista foi alterado
-                tarefasListas.add(tarefanew);
-                adapter.notifyDataSetChanged();*/
                 Intent CadastrarTarefa = new Intent(getApplicationContext(), CadastrarTarefa.class);
                 CadastrarTarefa.putExtra("com.example.dispositivo.zenapp.id_tarefa",String.valueOf(tarefasListas.size()));
                 startActivity(CadastrarTarefa);
@@ -257,11 +240,11 @@ public class TelaPrincipal extends AppCompatActivity
                                 for (final int position : reverseSortedPositions) {
                                     Toast.makeText(TelaPrincipal.this, tarefasListas.get(position).getTitulo() + " swiped left", Toast.LENGTH_SHORT).show();
                                     Snackbar snackbar = Snackbar
-                                            .make(mRecyclerView, "Desfazer Delete", Snackbar.LENGTH_LONG)
+                                            .make(mRecyclerView, "Desfazer remover tarefa", Snackbar.LENGTH_LONG)
                                             .setAction("UNDO", new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View view) {
-                                                    Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de delete desfeita", Snackbar.LENGTH_SHORT);
+                                                    Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de remover tarefa desfeita", Snackbar.LENGTH_SHORT);
                                                     snackbar1.show();
                                                     tarefasListas.add(del,retorna);
                                                     bd.cadastrarTarefaDiaria(retorna);
@@ -285,11 +268,11 @@ public class TelaPrincipal extends AppCompatActivity
                                 for (int position : reverseSortedPositions) {
                                     Toast.makeText(TelaPrincipal.this, tarefasListas.get(position).getTitulo() + " swiped right", Toast.LENGTH_SHORT).show();
                                     Snackbar snackbar = Snackbar
-                                            .make(mRecyclerView, "Desfazer Delete", Snackbar.LENGTH_LONG)
+                                            .make(mRecyclerView, "Desfazer remover tarefa", Snackbar.LENGTH_LONG)
                                             .setAction("UNDO", new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View view) {
-                                                    Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de delete desfeita", Snackbar.LENGTH_SHORT);
+                                                    Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de remover tarefa desfeita", Snackbar.LENGTH_SHORT);
                                                     snackbar1.show();
                                                     tarefasListas.add(del,retorna);
                                                     bd.cadastrarTarefaDiaria(retorna);
@@ -311,6 +294,8 @@ public class TelaPrincipal extends AppCompatActivity
                         });
 
         mRecyclerView.addOnItemTouchListener(swipeTouchListener);
+
+
     }
 
 

@@ -1,6 +1,10 @@
 package com.example.dispositivo.zenapp;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -100,4 +104,5 @@ public class CadastrarTarefa extends AppCompatActivity {
             }
         });
     }
+
 }

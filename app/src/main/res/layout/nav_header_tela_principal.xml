@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.16"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/ic_menu_icon" />
+        app:srcCompat="@mipmap/zenapp" />
 
     <TextView
         android:id="@+id/nome_usuario"

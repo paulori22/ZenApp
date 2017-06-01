@@ -7,7 +7,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.dispositivo.zenapp.TelaPrincipal"
     tools:showIn="@layout/app_bar_tela_principal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
 
     <android.support.v7.widget.RecyclerView
@@ -21,5 +22,14 @@
         android:paddingBottom="80dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp" />
+
+    <ProgressBar
+        android:id="@+id/tarefas_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
 
 </LinearLayout>

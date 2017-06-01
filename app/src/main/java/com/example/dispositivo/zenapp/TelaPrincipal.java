@@ -56,6 +56,8 @@ public class TelaPrincipal extends AppCompatActivity
     private final String tipo_diario = "TDIARIA/";
     private final String tipo_semanal = "TSEMANAL/";
     private String tela_atual= "TDIARIA/";
+    private View mProgressView;
+    private View mTarefaForm;
 
     // UI references.
 
@@ -79,6 +81,10 @@ public class TelaPrincipal extends AppCompatActivity
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         data = FirebaseDatabase.getInstance();
         bd = new Firebase(usuario,data);
+        mProgressView = findViewById(R.id.tarefas_progress);
+        mTarefaForm = findViewById(R.id.recycler_recyclerteste);
+
+        showProgress(true);
 
         filtro(tipo_diario);
 
@@ -222,9 +228,7 @@ public class TelaPrincipal extends AppCompatActivity
 
     public void filtro(String type, final String tag) {
 
-
-
-
+        showProgress(true);
 
         DatabaseReference myRef = data.getReference(type + usuario.getUid());
 
@@ -240,7 +244,7 @@ public class TelaPrincipal extends AppCompatActivity
 
                 }
                 adapter.notifyDataSetChanged();
-                Toast.makeText(TelaPrincipal.this, "baladinha" , Toast.LENGTH_SHORT).show();
+                showProgress(false);
             }
 
             @Override
@@ -253,6 +257,8 @@ public class TelaPrincipal extends AppCompatActivity
     }
 
     public void filtro(String type) {
+
+        showProgress(true);
 
         DatabaseReference myRef = data.getReference(type + usuario.getUid());
 
@@ -267,7 +273,7 @@ public class TelaPrincipal extends AppCompatActivity
 
                 }
                 adapter.notifyDataSetChanged();
-                Toast.makeText(TelaPrincipal.this, "baladinha" , Toast.LENGTH_SHORT).show();
+                showProgress(false);
             }
 
             @Override
@@ -355,6 +361,42 @@ public class TelaPrincipal extends AppCompatActivity
         mRecyclerView.addOnItemTouchListener(swipeTouchListener);
 
 
+    }
+
+    /**
+     * Shows the progress UI and hides the login form.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mTarefaForm.setVisibility(show ? View.GONE : View.VISIBLE);
+            mTarefaForm.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mTarefaForm.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mTarefaForm.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 
 

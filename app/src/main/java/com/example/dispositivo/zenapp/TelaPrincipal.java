@@ -53,6 +53,9 @@ public class TelaPrincipal extends AppCompatActivity
     private List<Tarefa> tarefasListas = new ArrayList<Tarefa>();
     private FloatingActionButton floatingActionButton;
     private RecyclerView.OnItemTouchListener onItemTouchListener;
+    private final String tipo_diario = "TDIARIA/";
+    private final String tipo_semanal = "TSEMANAL/";
+    private String tela_atual= "TDIARIA/";
 
     // UI references.
 
@@ -77,25 +80,7 @@ public class TelaPrincipal extends AppCompatActivity
         data = FirebaseDatabase.getInstance();
         bd = new Firebase(usuario,data);
 
-        DatabaseReference myRef = data.getReference("TDIARIA/" + usuario.getUid());
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                tarefasListas.clear();
-                for(DataSnapshot datachild: dataSnapshot.getChildren()) {
-                    Tarefa novo = datachild.getValue(Tarefa.class);
-                    Log.e("PEGANDO VALOR DO BD "," id = " + novo.getId() + "  titulo = " + novo.getTitulo());
-                    tarefasListas.add(novo);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-
-            }
-        });
+        filtro(tipo_diario);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -140,7 +125,20 @@ public class TelaPrincipal extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.fil_trabalho) {
+            filtro(tela_atual,"Trabalho");
+            return true;
+        }
+        else if(id == R.id.fil_estudo){
+            filtro(tela_atual,"Estudo");
+            return true;
+        }
+        else if(id == R.id.fil_fora){
+            filtro(tela_atual,"Fora");
+            return true;
+        }
+        else if(id == R.id.fil_delegado){
+            filtro(tela_atual,"Delegado");
             return true;
         }
 
@@ -154,9 +152,11 @@ public class TelaPrincipal extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_diarias) {
-            // tarefas diariais
+            tela_atual=tipo_diario;
+            filtro(tipo_diario);
         } else if (id == R.id.nav_semanais) {
-
+            tela_atual=tipo_semanal;
+            filtro(tipo_semanal);
         }else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
             Intent Login = new Intent(getApplicationContext(),LoginActivity.class);
@@ -213,6 +213,65 @@ public class TelaPrincipal extends AppCompatActivity
                 Intent CadastrarTarefa = new Intent(getApplicationContext(), CadastrarTarefa.class);
                 CadastrarTarefa.putExtra("com.example.dispositivo.zenapp.id_tarefa",String.valueOf(tarefasListas.size()));
                 startActivity(CadastrarTarefa);
+
+            }
+        });
+
+
+    }
+
+    public void filtro(String type, final String tag) {
+
+
+
+
+
+        DatabaseReference myRef = data.getReference(type + usuario.getUid());
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tarefasListas.clear();
+
+                for (DataSnapshot datachild : dataSnapshot.getChildren()) {
+                    Tarefa novo = datachild.getValue(Tarefa.class);
+                    if(novo.getTag()==tag)
+                        tarefasListas.add(novo);
+
+                }
+                adapter.notifyDataSetChanged();
+                Toast.makeText(TelaPrincipal.this, "baladinha" , Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+    public void filtro(String type) {
+
+        DatabaseReference myRef = data.getReference(type + usuario.getUid());
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tarefasListas.clear();
+                for (DataSnapshot datachild : dataSnapshot.getChildren()) {
+                    Tarefa novo = datachild.getValue(Tarefa.class);
+                    tarefasListas.add(novo);
+
+
+                }
+                adapter.notifyDataSetChanged();
+                Toast.makeText(TelaPrincipal.this, "baladinha" , Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
 
             }
         });

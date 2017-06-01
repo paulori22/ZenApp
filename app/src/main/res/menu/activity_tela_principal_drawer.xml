@@ -2,6 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+        <item android:title="Tarefas">
+            <menu>
         <item
             android:id="@+id/nav_diarias"
             android:icon="@drawable/ic_menu_diarias"
@@ -10,9 +12,11 @@
             android:id="@+id/nav_semanais"
             android:icon="@drawable/ic_menu_semanais"
             android:title="Tarefas Semanais" />
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_logout"
-            android:title="Sair" />
+            </menu>
+        </item>
     </group>
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_menu_logout"
+        android:title="Sair" />
 </menu>

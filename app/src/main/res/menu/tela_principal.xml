@@ -2,10 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/fil_trabalho"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Trabalho"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/fil_estudo"
+        android:orderInCategory="100"
+        android:title="Estudo"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/fil_fora"
+        android:orderInCategory="100"
+        android:title="Fora"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/fil_delegado"
+        android:orderInCategory="100"
+        android:title="Delegado"
+        app:showAsAction="never" />
+
+
 
     <!-- "Mark Favorite", should appear as action button if possible -->
 

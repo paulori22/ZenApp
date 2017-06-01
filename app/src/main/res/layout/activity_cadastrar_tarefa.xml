@@ -27,6 +27,16 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/buttonsalvar"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:text="salvar"
+            android:textColor="@color/colorAccentText" />
+
+        <Button
             android:id="@+id/buttoncancelar"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
@@ -36,15 +46,6 @@
             android:text="cancelar"
             android:textColor="@color/colorAccentText" />
 
-        <Button
-            android:id="@+id/buttonsalvar"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorAccent"
-            android:text="salvar"
-            android:textColor="@color/colorAccentText" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

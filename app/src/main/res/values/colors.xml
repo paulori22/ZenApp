@@ -4,5 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
     <color name="colorAccentText">#ffc9db</color>
+    <color name="colorCancelarButton">#ff482c</color>
+    <color name="colorCancelarButtonText">#ffcbc3</color>
+    <color name="colorSalvarButton">#10ad01</color>
+    <color name="colorSalvarButtonText">#cefdca</color>
 
 </resources>

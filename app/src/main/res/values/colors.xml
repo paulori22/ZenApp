@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#26C1E8</color>
-    <color name="colorPrimaryDark">#26C1E8</color>
-    <color name="colorAccent">#13E7FD</color>
-    <color name="colorAccentText">#13E7FD</color>
-    <color name="colorCancelarButton">#11CAF9</color>
+    <color name="colorPrimary">#097F51</color>
+    <color name="colorPrimaryDark">#147F55</color>
+    <color name="colorAccent">#097F51</color>
+    <color name="colorAccentText">#0DCC74</color>
+    <color name="colorCancelarButton">#0DCC74</color>
     <color name="colorCancelarButtonText">#FFFFFF</color>
-    <color name="colorSalvarButton">#11CAF9</color>
+    <color name="colorSalvarButton">#0DCC74</color>
     <color name="colorSalvarButtonText">#FFFFFF</color>
     <color name="colorClaro">#F8FEFF</color>
     <color name="colorBranco">#FFFFFF</color>
-    <color name="colorEscuro">#26CFE1</color>
+    <color name="colorEscuro">#097F51</color>
 
 </resources>

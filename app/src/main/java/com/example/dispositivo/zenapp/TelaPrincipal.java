@@ -182,8 +182,6 @@ public class TelaPrincipal extends AppCompatActivity
         Tarefa tarefa = (Tarefa) object;
         String nome = tarefa.getTitulo();
         String Descricao = tarefa.getDescricao();
-
-        Toast.makeText(TelaPrincipal.this, nome , Toast.LENGTH_SHORT).show();
     }
 
     public void setaRecyclerView() {

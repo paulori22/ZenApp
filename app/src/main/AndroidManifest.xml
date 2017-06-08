@@ -40,7 +40,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.dispositivo.zenapp.LoginActivity" />
         </activity>
-        <activity android:name=".CadastrarTarefa"></activity>
+        <activity android:name=".CadastrarTarefa">
+        </activity>
+        <activity android:name=".EditarTarefa"></activity>
     </application>
 
 </manifest>

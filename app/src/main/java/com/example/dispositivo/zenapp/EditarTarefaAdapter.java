@@ -2,6 +2,7 @@ package com.example.dispositivo.zenapp;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,8 +21,7 @@ import java.util.List;
  * Created by wesley on 14/04/2017.
  */
 
-public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
-
+public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<Object> items;
     String nomeTarefa = "";
     String tagtype = "Desativado";
@@ -29,7 +30,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private final int TEXT = 0, TEXT2 = 1;
 
-    public CadastrarTarefaAdapter(List<Object> items)
+    public EditarTarefaAdapter(List<Object> items)
     {
         this.items = items;
     }
@@ -337,3 +338,4 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
         return this.items.size();
     }
 }
+

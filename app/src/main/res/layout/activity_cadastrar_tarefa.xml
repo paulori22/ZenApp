@@ -32,9 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorSalvarButton"
             android:text="salvar"
-            android:textColor="@color/colorAccentText" />
+            android:textColor="@color/colorBranco" />
 
         <Button
             android:id="@+id/buttoncancelar"
@@ -42,9 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="63dp"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorSalvarButton"
             android:text="cancelar"
-            android:textColor="@color/colorAccentText" />
+            android:textColor="@color/colorBranco" />
 
     </LinearLayout>
 

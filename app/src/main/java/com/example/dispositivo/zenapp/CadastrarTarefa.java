@@ -57,8 +57,6 @@ public class CadastrarTarefa extends AppCompatActivity {
 
         id = getIntent().getStringExtra("com.example.dispositivo.zenapp.id_tarefa");
 
-        //Log.e("ID = ",this.id);
-
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         data = FirebaseDatabase.getInstance();

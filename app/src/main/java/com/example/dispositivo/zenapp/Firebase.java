@@ -28,9 +28,6 @@ public class Firebase {
     }
 
     public void cadastrarTarefaDiaria(Tarefa t) {
-        /*database.getReference("TDIARIA/" + user.getUid()).child(t.getId()).child("Titulo").setValue(t.getTitulo());
-        database.getReference("TDIARIA/" + user.getUid()).child(t.getId()).child("Descricao").setValue(t.getDescricao());
-        database.getReference("TDIARIA/" + user.getUid()).child(t.getId()).child("Tag").setValue(t.getTag());*/
         database.getReference("TDIARIA/" + user.getUid()).child(t.getId()).setValue(t);
     }
 
@@ -42,9 +39,7 @@ public class Firebase {
 
     public void cadastrarTarefaSemanal(Tarefa t)
     {
-        database.getReference("TSEMANAL/" + user.getUid()).child(t.getId()).child("Titulo").setValue(t.getTitulo());
-        database.getReference("TSEMANAL/" + user.getUid()).child(t.getId()).child("Descricao").setValue(t.getDescricao());
-        database.getReference("TDIARIA/" + user.getUid()).child(t.getId() ).child("Tag").setValue(t.getTag());
+        database.getReference("TSEMANAL/" + user.getUid()).child(t.getId()).setValue(t);
     }
 
     public List<Tarefa> getTarefas() {

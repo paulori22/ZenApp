@@ -67,7 +67,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
 
 
         switch(viewHolder.getItemViewType())

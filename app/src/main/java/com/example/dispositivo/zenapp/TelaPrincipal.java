@@ -76,6 +76,7 @@ public class TelaPrincipal extends AppCompatActivity
         listenersButtons();
         listenersSwipeable();
 
+        this.setTitle("Tarefas Diárias");
 
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
@@ -158,9 +159,11 @@ public class TelaPrincipal extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_diarias) {
+            this.setTitle("Tarefas Diárias");
             tela_atual=tipo_diario;
             filtro(tipo_diario);
         } else if (id == R.id.nav_semanais) {
+            this.setTitle("Tarefas Semanais");
             tela_atual=tipo_semanal;
             filtro(tipo_semanal);
         }else if (id == R.id.nav_logout) {

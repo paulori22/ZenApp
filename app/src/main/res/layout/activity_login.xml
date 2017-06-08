@@ -21,10 +21,10 @@
         android:visibility="gone" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/logo_tela_login"
         android:layout_width="match_parent"
         android:layout_height="126dp"
-        app:srcCompat="@mipmap/zenapp" />
+        app:srcCompat="@drawable/zenicon" />
 
     <ScrollView
         android:id="@+id/login_form"

@@ -300,7 +300,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
         TextText2Model text = (TextText2Model) items.get(position);
         if(text != null)
         {
-            vh2.getLabel3().setText(text.getText3());
+            vh2.getLabel3().setText(text.getText3()) ;
             vh2.getLabel4().setText(text.getText4());
         }
     }

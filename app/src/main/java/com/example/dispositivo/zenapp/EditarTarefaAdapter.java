@@ -54,7 +54,7 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                 break;
             default:
                 View v = inflater.inflate(android.R.layout.simple_list_item_1, viewGroup, false);
-                viewHolder = new TextButtonHolder(v);
+                viewHolder = new TextTextHolder(v);
                 break;
         }
         return viewHolder;
@@ -68,7 +68,7 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
 
 
         switch(viewHolder.getItemViewType())
@@ -90,7 +90,7 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                if(position == 0)
+                if(viewHolder.getAdapterPosition() == 0)
                 {
                     LayoutInflater dialoginflater = LayoutInflater.from(v.getContext());
                     final View dialogview = dialoginflater.inflate(R.layout.layout_textdialog,null);
@@ -114,12 +114,12 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                             TextTextHolder holder = (TextTextHolder) viewHolder;
                             if(ed.getText().toString().matches(""))
                             {
-                                configureTextTextHolder(holder, position, "Tarefa");
+                                configureTextTextHolder(holder, viewHolder.getAdapterPosition(), "Tarefa");
                                 nomeTarefa = "Tarefa";
                             }
                             else
                             {
-                                configureTextTextHolder(holder, position, ed.getText().toString());
+                                configureTextTextHolder(holder, viewHolder.getAdapterPosition(), ed.getText().toString());
                                 nomeTarefa = ed.getText().toString();
 
                             }
@@ -135,7 +135,7 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
-                else if(position == 1)
+                else if(viewHolder.getAdapterPosition() == 1)
                 {
                     final ArrayList<Object> tagList = new ArrayList<>();
                     tagList.add(new RadioButtonModel("Desativado",true));
@@ -170,7 +170,7 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                             RadioButtonModel rbm = (RadioButtonModel) tagList.get(pos);
                             TextView t = (TextView) v.findViewById(R.id.text2);
                             TextTextHolder holder = (TextTextHolder) viewHolder;
-                            configureTextTextHolder(holder,position,rbm.getText().toString());
+                            configureTextTextHolder(holder,viewHolder.getAdapterPosition(),rbm.getText().toString());
                             t.setText(holder.getLabel2().getText());
                             tagtype = rbm.getText().toString();
                             dialog.dismiss();
@@ -184,7 +184,7 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
-                else if(position == 2)
+                else if(viewHolder.getAdapterPosition() == 2)
                 {
                     final ArrayList<Object> tarefaTypeList = new ArrayList<>();
                     tarefaTypeList.add(new RadioButtonModel("Diário", true));
@@ -216,7 +216,7 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                             RadioButtonModel rbm = (RadioButtonModel) tarefaTypeList.get(pos);
                             TextView t = (TextView) v.findViewById(R.id.text2);
                             TextTextHolder holder = (TextTextHolder) viewHolder;
-                            configureTextTextHolder(holder,position,rbm.getText().toString());
+                            configureTextTextHolder(holder,viewHolder.getAdapterPosition(),rbm.getText().toString());
                             t.setText(holder.getLabel2().getText());
                             tarefatype = rbm.getText().toString();
                             dialog.dismiss();
@@ -230,7 +230,7 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
-                else if(position == 3)
+                else if(viewHolder.getAdapterPosition() == 3)
                 {
                     LayoutInflater dialoginflater = LayoutInflater.from(v.getContext());
                     final View dialogview = dialoginflater.inflate(R.layout.layout_textdialog,null);
@@ -255,11 +255,11 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
 
                             if(ed.getText().toString().matches(""))
                             {
-                                configureTextText2Holder(holder,position,"Desativado");
+                                configureTextText2Holder(holder,viewHolder.getAdapterPosition(),"Desativado");
                                 desc = "Desativado";
                             }
                             else {
-                                configureTextText2Holder(holder, position, ed.getText().toString());
+                                configureTextText2Holder(holder, viewHolder.getAdapterPosition(), ed.getText().toString());
                                 desc = ed.getText().toString();
                             }
                             t.setText(holder.getLabel4().getText());

@@ -15,17 +15,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by wesley on 14/04/2017.
- */
-
 public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private List<Object> items;
-    String nomeTarefa = "";
-    String tagtype = "Desativado";
-    String desc = "";
-    String tarefatype = "Diário";
+    private String nomeTarefa = "";
+    private String tagtype = "Desativado";
+    private String desc = "";
+    private String tarefatype = "Diário";
 
     private final int TEXT = 0, TEXT2 = 1;
 
@@ -53,7 +49,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                 break;
             default:
                 View v = inflater.inflate(android.R.layout.simple_list_item_1, viewGroup, false);
-                viewHolder = new TextButtonHolder(v);
+                viewHolder = new TextTextHolder(v);
                 break;
         }
         return viewHolder;
@@ -170,9 +166,9 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                             RadioButtonModel rbm = (RadioButtonModel) tagList.get(pos);
                             TextView t = (TextView) v.findViewById(R.id.text2);
                             TextTextHolder holder = (TextTextHolder) viewHolder;
-                            configureTextTextHolder(holder,viewHolder.getAdapterPosition(),rbm.getText().toString());
+                            configureTextTextHolder(holder,viewHolder.getAdapterPosition(),rbm.getText());
                             t.setText(holder.getLabel2().getText());
-                            tagtype = rbm.getText().toString();
+                            tagtype = rbm.getText();
                             dialog.dismiss();
                         }
                     });
@@ -216,9 +212,9 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                             RadioButtonModel rbm = (RadioButtonModel) tarefaTypeList.get(pos);
                             TextView t = (TextView) v.findViewById(R.id.text2);
                             TextTextHolder holder = (TextTextHolder) viewHolder;
-                            configureTextTextHolder(holder,viewHolder.getAdapterPosition(),rbm.getText().toString());
+                            configureTextTextHolder(holder,viewHolder.getAdapterPosition(),rbm.getText());
                             t.setText(holder.getLabel2().getText());
-                            tarefatype = rbm.getText().toString();
+                            tarefatype = rbm.getText();
                             dialog.dismiss();
                         }
                     });
@@ -300,7 +296,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
         TextText2Model text = (TextText2Model) items.get(position);
         if(text != null)
         {
-            vh2.getLabel3().setText(text.getText3()) ;
+            vh2.getLabel3().setText(text.getText3());
             vh2.getLabel4().setText(text.getText4());
         }
     }

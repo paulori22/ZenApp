@@ -85,6 +85,7 @@ public class TelaPrincipal extends AppCompatActivity
 
         filtro(tipo_diario);
 
+        tela_atual = tipo_diario;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -214,7 +215,10 @@ public class TelaPrincipal extends AppCompatActivity
             public void onClick(View v) {
 
                 Intent CadastrarTarefa = new Intent(getApplicationContext(), CadastrarTarefa.class);
-                CadastrarTarefa.putExtra("com.example.dispositivo.zenapp.id_tarefa",String.valueOf(tarefasListas.size()));
+                Bundle b = new Bundle();
+                b.putStringArray("com.example.dispositivo.zenapp.id_tarefa",new String[]{String.valueOf(tarefasListas.size()),tela_atual});
+                CadastrarTarefa.putExtras(b);
+                //CadastrarTarefa.putExtra("com.example.dispositivo.zenapp.id_tarefa",String.valueOf(tarefasListas.size()));
                 startActivity(CadastrarTarefa);
 
             }

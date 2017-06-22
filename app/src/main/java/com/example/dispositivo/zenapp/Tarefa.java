@@ -9,6 +9,7 @@ public class Tarefa {
     private String titulo;
     private String descricao;
     private String tag;
+    private String tipo;
 
 
     public Tarefa() {
@@ -16,11 +17,12 @@ public class Tarefa {
 
     }
 
-    public Tarefa(String id,String titulo, String descricao, String tag) {
+    public Tarefa(String id,String titulo, String descricao, String tag,String tipo) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.tag = tag;
+        this.tipo = tipo;
     }
 
     public String getTitulo() {
@@ -54,4 +56,8 @@ public class Tarefa {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getTipo(){ return tipo; }
+
+    public void setTipo(String tipo){ this.tipo = tipo; }
 }

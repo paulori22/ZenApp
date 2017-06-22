@@ -26,7 +26,7 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
     String nomeTarefa = "";
     String tagtype = "Desativado";
     String desc = "";
-    String tarefatype = "Diário";
+    //String tarefatype = "Diário";
 
     private final int TEXT = 0, TEXT2 = 1;
 
@@ -99,9 +99,10 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                     builder.setView(dialogview);
                     EditText ed = (EditText) dialogview.findViewById(R.id.editTextDialog);
                     TextView nameDialog = (TextView) dialogview.findViewById(R.id.textDialog);
+                    TextView t = (TextView) v.findViewById(R.id.text2);
                     nameDialog.setText("Nome da Tarefa");
                     nameDialog.setTextColor(Color.BLACK);
-                    ed.setText("");
+                    ed.setText(t.getText().toString());
                     ed.setHint("Nome");
 
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener()
@@ -112,10 +113,10 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                             EditText ed = (EditText) dialogview.findViewById(R.id.editTextDialog);
                             TextView t = (TextView) v.findViewById(R.id.text2);
                             TextTextHolder holder = (TextTextHolder) viewHolder;
-                            if(ed.getText().toString().matches(""))
+                            if(ed.getText().toString().equals(""))
                             {
-                                configureTextTextHolder(holder, viewHolder.getAdapterPosition(), "Tarefa");
-                                nomeTarefa = "Tarefa";
+                                configureTextTextHolder(holder, viewHolder.getAdapterPosition(), "");
+                                nomeTarefa = "";
                             }
                             else
                             {
@@ -184,7 +185,7 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
-                else if(viewHolder.getAdapterPosition() == 2)
+                /*else if(viewHolder.getAdapterPosition() == 2)
                 {
                     final ArrayList<Object> tarefaTypeList = new ArrayList<>();
                     tarefaTypeList.add(new RadioButtonModel("Diário", true));
@@ -229,7 +230,7 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                }
+                }*/
                 else if(viewHolder.getAdapterPosition() == 3)
                 {
                     LayoutInflater dialoginflater = LayoutInflater.from(v.getContext());
@@ -241,7 +242,8 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                     TextView nameDialog = (TextView) dialogview.findViewById(R.id.textDialog);
                     nameDialog.setText("Descrição");
                     nameDialog.setTextColor(Color.BLACK);
-                    ed.setText("");
+                    TextView t = (TextView) v.findViewById(R.id.text4);
+                    ed.setText(t.getText().toString());
                     ed.setHint("Descrição");
 
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener()
@@ -285,6 +287,14 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
             vh1.getLabel1().setText(text.getText1());
             vh1.getLabel2().setText(text.getText2());
         }
+        if(position == 0)
+        {
+            nomeTarefa = text.getText2();
+        }
+        else if(position == 1)
+        {
+            tagtype = text.getText2();
+        }
     }
 
     private void configureTextTextHolder(TextTextHolder vh1, int position, String a) {
@@ -302,6 +312,10 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
         {
             vh2.getLabel3().setText(text.getText3());
             vh2.getLabel4().setText(text.getText4());
+        }
+        if(position == 3)
+        {
+            desc = text.getText4();
         }
     }
 
@@ -322,10 +336,10 @@ public class EditarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
     {
         return desc;
     }
-    public String getTarefaType()
+    /*public String getTarefaType()
     {
         return tarefatype;
-    }
+    }*/
 
     public String getTag()
     {

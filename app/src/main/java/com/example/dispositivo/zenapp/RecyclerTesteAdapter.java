@@ -35,6 +35,7 @@ public class RecyclerTesteAdapter extends RecyclerView.Adapter<RecyclerTesteAdap
     Context mctx;
     private List<Tarefa> mList;
     private String idtaref = "";
+    private String tipotarefa;
 
 
     public RecyclerTesteAdapter(Context ctx, List<Tarefa> list, ClickRecyclerView_Interface clickRecyclerViewInterface) {
@@ -59,6 +60,7 @@ public class RecyclerTesteAdapter extends RecyclerView.Adapter<RecyclerTesteAdap
         viewHolder.tagtarefa.setText(tarefa.getTag());
         viewHolder.idtarefa = tarefa.getId();
         idtaref = tarefa.getId();
+        tipotarefa = tarefa.getTipo();
 
 
     }
@@ -93,7 +95,7 @@ public class RecyclerTesteAdapter extends RecyclerView.Adapter<RecyclerTesteAdap
                 public void onClick(View view) {
                     Intent EditTarefa = new Intent(mctx.getApplicationContext(), EditarTarefa.class);
                     Bundle b = new Bundle();
-                    b.putStringArray("tarefainfo",new String[]{nometarefa.getText().toString(),tagtarefa.getText().toString(),desctarefa.getText().toString(),idtaref});
+                    b.putStringArray("tarefainfo",new String[]{nometarefa.getText().toString(),tagtarefa.getText().toString(),desctarefa.getText().toString(),idtaref,tipotarefa});
                     EditTarefa.putExtras(b);
                     //EditTarefa.putExtra("com.example.dispositivo.zenapp.id_tarefa",String.valueOf(mList.size()));
                     mctx.startActivity(EditTarefa);
@@ -112,12 +114,10 @@ public class RecyclerTesteAdapter extends RecyclerView.Adapter<RecyclerTesteAdap
 
                     TextView nometarefadetail = (TextView) dialogview.findViewById(R.id.textNomeTarefaDetalhe);
                     TextView tagdetail = (TextView) dialogview.findViewById(R.id.textTagDetalhe);
-                    TextView timerdetail = (TextView) dialogview.findViewById(R.id.textTimerDetalhe);
                     TextView descdetail = (TextView)dialogview.findViewById(R.id.textDescDetalhe);
 
                     nometarefadetail.setText(nometarefa.getText());
                     tagdetail.setText(tagtarefa.getText());
-                    timerdetail.setText("Desativado");
                     descdetail.setText(desctarefa.getText());
 
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener()

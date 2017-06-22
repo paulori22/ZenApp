@@ -21,7 +21,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
     private String nomeTarefa = "";
     private String tagtype = "Desativado";
     private String desc = "";
-    private String tarefatype = "Diário";
+    //private String tarefatype = "Diário";
 
     private final int TEXT = 0, TEXT2 = 1;
 
@@ -110,8 +110,8 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                             TextTextHolder holder = (TextTextHolder) viewHolder;
                             if(ed.getText().toString().matches(""))
                             {
-                                configureTextTextHolder(holder, viewHolder.getAdapterPosition(), "Tarefa");
-                                nomeTarefa = "Tarefa";
+                                configureTextTextHolder(holder, viewHolder.getAdapterPosition(), "");
+                                nomeTarefa = "";
                             }
                             else
                             {
@@ -180,7 +180,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
-                else if(viewHolder.getAdapterPosition() == 2)
+                /*else if(viewHolder.getAdapterPosition() == 2)
                 {
                     final ArrayList<Object> tarefaTypeList = new ArrayList<>();
                     tarefaTypeList.add(new RadioButtonModel("Diário", true));
@@ -225,7 +225,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                }
+                }*/
                 else if(viewHolder.getAdapterPosition() == 3)
                 {
                     LayoutInflater dialoginflater = LayoutInflater.from(v.getContext());
@@ -318,10 +318,10 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
     {
         return desc;
     }
-    public String getTarefaType()
+    /*public String getTarefaType()
     {
         return tarefatype;
-    }
+    }*/
 
     public String getTag()
     {

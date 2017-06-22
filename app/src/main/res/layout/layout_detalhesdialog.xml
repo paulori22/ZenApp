@@ -54,24 +54,6 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textTimerTitle"
-        android:textColor="@android:color/black"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:text="Timer" />
-
-    <TextView
-        android:id="@+id/textTimerDetalhe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:paddingBottom="20dp"
-        android:layout_marginRight="24dp"
-        android:text="TextView" />
-
-    <TextView
         android:id="@+id/textDescTitle"
         android:textColor="@android:color/black"
         android:layout_width="match_parent"

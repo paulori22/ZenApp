@@ -37,6 +37,8 @@ public class EditarTarefa extends AppCompatActivity {
     private FirebaseDatabase data;
     private Firebase bd;
     private String id;
+    private final String tipo_diario = "TDIARIA/";
+    private final String tipo_semanal = "TSEMANAL/";
     private ArrayList<Object> items = new ArrayList<>();
     String nomeTarefa,desc,tagtype,tarefatype;
     int timer;
@@ -52,10 +54,18 @@ public class EditarTarefa extends AppCompatActivity {
         Bundle b = this.getIntent().getExtras();
         final String[] array = b.getStringArray("tarefainfo");
         id = array[3];
+        tarefatype = array[4];
 
         items.add(new TextTextModel("Nome da Tarefa",array[0]));
         items.add(new TextTextModel("Tag",array[1]));
-        items.add(new TextTextModel("Tipo da tarefa","Diário"));
+        if(tarefatype.equals(tipo_diario))
+        {
+            items.add(new TextTextModel("Tipo da tarefa","Diário"));
+        }
+        else
+        {
+            items.add(new TextTextModel("Tipo da tarefa","Semanal"));
+        }
         items.add(new TextText2Model("Descrição",array[2]));
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
@@ -81,16 +91,17 @@ public class EditarTarefa extends AppCompatActivity {
                 nomeTarefa = adapter.getNomeTarefa();
                 desc = adapter.getDesc();
                 tagtype = adapter.getTag();
-                tarefatype = adapter.getTarefaType();
-                if(!nomeTarefa.matches(""))
+                //tarefatype = adapter.getTarefaType();
+
+                if(!nomeTarefa.equals(""))
                 {
-                    Tarefa novaTarefa = new Tarefa(id,nomeTarefa,desc,tagtype);
-                    if(tarefatype.equals("Diário"))
+                    Tarefa novaTarefa = new Tarefa(id,nomeTarefa,desc,tagtype,tarefatype);
+                    if(tarefatype.equals(tipo_diario))
                     {
                         bd.cadastrarTarefaDiaria(novaTarefa);
                         Log.e("ID = ",id);
                     }
-                    else if(tarefatype.equals("Semanal"))
+                    else if(tarefatype.equals(tipo_semanal))
                     {
                         bd.cadastrarTarefaSemanal(novaTarefa);
                         Log.e("ID = ",id);
@@ -99,7 +110,7 @@ public class EditarTarefa extends AppCompatActivity {
                 }
                 else
                 {
-                    Snackbar snackbar = Snackbar.make(rvContacts, "Insira um nome para a tarefa", Snackbar.LENGTH_SHORT);
+                    Snackbar snackbar = Snackbar.make(rvContacts, "Insira um nome para a tarefa", Snackbar.LENGTH_LONG);
                     View snackbarview = snackbar.getView();
                     TextView tx = (TextView) snackbarview.findViewById(android.support.design.R.id.snackbar_text);
                     tx.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -107,7 +118,6 @@ public class EditarTarefa extends AppCompatActivity {
                     tx.setTextColor(Color.YELLOW);
                     snackbar.show();
                 }
-                finish();
             }
         });
 

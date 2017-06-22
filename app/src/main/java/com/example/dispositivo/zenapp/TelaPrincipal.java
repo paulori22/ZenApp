@@ -6,36 +6,32 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.design.widget.CoordinatorLayout;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +51,7 @@ public class TelaPrincipal extends AppCompatActivity
     private RecyclerView.OnItemTouchListener onItemTouchListener;
     private final String tipo_diario = "TDIARIA/";
     private final String tipo_semanal = "TSEMANAL/";
-    private String tela_atual= "TDIARIA/";
+    private String tela_atual;
     private View mProgressView;
     private View mTarefaForm;
 
@@ -313,20 +309,26 @@ public class TelaPrincipal extends AppCompatActivity
                                                     Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de remover tarefa desfeita", Snackbar.LENGTH_SHORT);
                                                     snackbar1.show();
                                                     tarefasListas.add(del,retorna);
-                                                    bd.cadastrarTarefaDiaria(retorna);
-                                                    adapter.notifyDataSetChanged();
+                                                    if(tela_atual.equals(tipo_diario))
+                                                        bd.cadastrarTarefaDiaria(retorna);
+                                                    else
+                                                        bd.cadastrarTarefaSemanal(retorna);
+
+                                                    filtro(tela_atual);
 
                                                 }
                                             });
                                     snackbar.show();
                                     retorna=tarefasListas.get(position);
                                     del=position;
-                                    //Log.e("Deletar tarefa","id = "+ position + "Tarefa: " + tarefasListas.get(position).getTitulo());
-                                    bd.removerTarefaDiaria(tarefasListas.get(position));
+                                    if(tela_atual.equals(tipo_diario))
+                                        bd.removerTarefaDiaria(tarefasListas.get(position));
+                                    else
+                                        bd.removerTarefaSemanal(tarefasListas.get(position));
                                     tarefasListas.remove(position);
-                                    adapter.notifyItemRemoved(position);
+                                    filtro(tela_atual);
                                 }
-                                adapter.notifyDataSetChanged();
+                                filtro(tela_atual);
                             }
 
                             @Override
@@ -340,9 +342,13 @@ public class TelaPrincipal extends AppCompatActivity
                                                 public void onClick(View view) {
                                                     Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de remover tarefa desfeita", Snackbar.LENGTH_SHORT);
                                                     snackbar1.show();
-                                                    tarefasListas.add(del,retorna);
-                                                    bd.cadastrarTarefaDiaria(retorna);
-                                                    adapter.notifyDataSetChanged();
+                                                        tarefasListas.add(del,retorna);
+                                                    if(tela_atual.equals(tipo_diario))
+                                                        bd.cadastrarTarefaDiaria(retorna);
+                                                    else
+                                                        bd.cadastrarTarefaSemanal(retorna);
+
+                                                    filtro(tela_atual);
 
                                                 }
                                             });
@@ -350,11 +356,14 @@ public class TelaPrincipal extends AppCompatActivity
                                     retorna=tarefasListas.get(position);
                                     del=position;
                                     Log.e("Deletar tarefa","id = "+ position + "Tarefa: " + tarefasListas.get(position).getTitulo());
-                                    bd.removerTarefaDiaria(tarefasListas.get(position));
+                                    if(tela_atual.equals(tipo_diario))
+                                        bd.removerTarefaDiaria(tarefasListas.get(position));
+                                    else
+                                        bd.removerTarefaSemanal(tarefasListas.get(position));
                                     tarefasListas.remove(position);
-                                    adapter.notifyItemRemoved(position);
+                                    filtro(tela_atual);
                                 }
-                                adapter.notifyDataSetChanged();
+                                filtro(tela_atual);
                             }
 
                         });

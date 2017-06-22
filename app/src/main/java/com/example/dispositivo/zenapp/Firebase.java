@@ -37,6 +37,12 @@ public class Firebase {
         database.getReference("TDIARIA/" + user.getUid()).child(t.getId()).removeValue();
     }
 
+    public void removerTarefaSemanal(Tarefa t)
+
+    {
+        database.getReference("TSEMANAL/" + user.getUid()).child(t.getId()).removeValue();
+    }
+
     public void cadastrarTarefaSemanal(Tarefa t)
     {
         database.getReference("TSEMANAL/" + user.getUid()).child(t.getId()).setValue(t);

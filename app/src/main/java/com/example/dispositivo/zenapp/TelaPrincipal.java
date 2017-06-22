@@ -193,6 +193,7 @@ public class TelaPrincipal extends AppCompatActivity
         super.onResume();
         contaNumeroTarefasDiaria();
         contaNumeroTarefasSemanal();
+        filtro(tela_atual);
     }
 
     public void setaRecyclerView() {

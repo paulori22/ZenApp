@@ -249,7 +249,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                             TextView t = (TextView) v.findViewById(R.id.text4);
                             TextText2Holder holder = (TextText2Holder) viewHolder;
 
-                            if(ed.getText().toString().matches(""))
+                            if(ed.getText().toString().equals(""))
                             {
                                 configureTextText2Holder(holder,viewHolder.getAdapterPosition(),"Desativado");
                                 desc = "Desativado";
@@ -258,7 +258,7 @@ public class CadastrarTarefaAdapter extends RecyclerView.Adapter<ViewHolder> {
                                 configureTextText2Holder(holder, viewHolder.getAdapterPosition(), ed.getText().toString());
                                 desc = ed.getText().toString();
                             }
-                            t.setText(holder.getLabel4().getText());
+                            t.setText(desc);
                             dialog.dismiss();
                         }
                     });

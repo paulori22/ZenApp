@@ -54,6 +54,8 @@ public class TelaPrincipal extends AppCompatActivity
     private String tela_atual;
     private View mProgressView;
     private View mTarefaForm;
+    private int numeroTarefasDiario;
+    private int numeroTarefasSemanal;
 
     // UI references.
 
@@ -81,11 +83,13 @@ public class TelaPrincipal extends AppCompatActivity
         mProgressView = findViewById(R.id.tarefas_progress);
         mTarefaForm = findViewById(R.id.recycler_recyclerteste);
 
-        showProgress(true);
-
         filtro(tipo_diario);
 
         tela_atual = tipo_diario;
+
+        contaNumeroTarefasDiaria();
+        contaNumeroTarefasSemanal();
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -179,6 +183,16 @@ public class TelaPrincipal extends AppCompatActivity
         Tarefa tarefa = (Tarefa) object;
         String nome = tarefa.getTitulo();
         String Descricao = tarefa.getDescricao();
+        Log.e("NUM Tarefas Diario:",String.valueOf(numeroTarefasDiario));
+        Log.e("NUM Tarefas Semanal:",String.valueOf(numeroTarefasSemanal));
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        contaNumeroTarefasDiaria();
+        contaNumeroTarefasSemanal();
     }
 
     public void setaRecyclerView() {
@@ -286,6 +300,73 @@ public class TelaPrincipal extends AppCompatActivity
 
     }
 
+    public void contaNumeroTarefasDiaria() {
+
+        showProgress(true);
+
+        DatabaseReference myRef = data.getReference(tipo_diario + usuario.getUid());
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                numeroTarefasDiario = (int) dataSnapshot.getChildrenCount();
+
+                showProgress(false);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+    public void contaNumeroTarefasSemanal() {
+
+        showProgress(true);
+
+        DatabaseReference myRef = data.getReference(tipo_semanal + usuario.getUid());
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                numeroTarefasSemanal = (int) dataSnapshot.getChildrenCount();
+
+                showProgress(false);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+
+    public void moveTarefa(Tarefa t)
+    {
+        if(tela_atual.equals(tipo_diario))
+        {
+
+            bd.removerTarefaDiaria(t);
+            t.setId(String.valueOf(numeroTarefasSemanal));
+            bd.cadastrarTarefaSemanal(t);
+
+        }
+        else
+        {
+            bd.removerTarefaSemanal(t);
+            t.setId(String.valueOf(numeroTarefasDiario));
+            bd.cadastrarTarefaDiaria(t);
+        }
+
+
+    }
+
     public void listenersSwipeable() {
         SwipeableRecyclerViewTouchListener swipeTouchListener =
                 new SwipeableRecyclerViewTouchListener(mRecyclerView,
@@ -304,19 +385,28 @@ public class TelaPrincipal extends AppCompatActivity
                             public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
 
                                 for (final int position : reverseSortedPositions) {
-                                    Toast.makeText(TelaPrincipal.this, tarefasListas.get(position).getTitulo() + " swiped left", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(TelaPrincipal.this, tarefasListas.get(position).getTitulo() + " swiped left", Toast.LENGTH_SHORT).show();
                                     Snackbar snackbar = Snackbar
-                                            .make(mRecyclerView, "Desfazer remover tarefa", Snackbar.LENGTH_LONG)
-                                            .setAction("UNDO", new View.OnClickListener() {
+                                            .make(mRecyclerView, "Desfazer mover tarefa", Snackbar.LENGTH_LONG)
+                                            .setAction("Desfazer", new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View view) {
-                                                    Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de remover tarefa desfeita", Snackbar.LENGTH_SHORT);
+                                                    Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de mover a tarefa desfeita", Snackbar.LENGTH_SHORT);
                                                     snackbar1.show();
                                                     tarefasListas.add(del,retorna);
                                                     if(tela_atual.equals(tipo_diario))
+                                                    {
                                                         bd.cadastrarTarefaDiaria(retorna);
+                                                        retorna.setId(String.valueOf(del));
+                                                        bd.removerTarefaSemanal(retorna);
+                                                    }
+
                                                     else
-                                                        bd.cadastrarTarefaSemanal(retorna);
+                                                    {
+                                                        bd.cadastrarTarefaDiaria(retorna);
+                                                        retorna.setId(String.valueOf(del));
+                                                        bd.removerTarefaDiaria(retorna);
+                                                    }
 
                                                     filtro(tela_atual);
 
@@ -325,11 +415,7 @@ public class TelaPrincipal extends AppCompatActivity
                                     snackbar.show();
                                     retorna=tarefasListas.get(position);
                                     del=position;
-                                    if(tela_atual.equals(tipo_diario))
-                                        bd.removerTarefaDiaria(tarefasListas.get(position));
-                                    else
-                                        bd.removerTarefaSemanal(tarefasListas.get(position));
-                                    tarefasListas.remove(position);
+                                    moveTarefa(retorna);
                                     filtro(tela_atual);
                                 }
                                 filtro(tela_atual);
@@ -338,10 +424,10 @@ public class TelaPrincipal extends AppCompatActivity
                             @Override
                             public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
-                                    Toast.makeText(TelaPrincipal.this, tarefasListas.get(position).getTitulo() + " swiped right", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(TelaPrincipal.this, tarefasListas.get(position).getTitulo() + " swiped right", Toast.LENGTH_SHORT).show();
                                     Snackbar snackbar = Snackbar
                                             .make(mRecyclerView, "Desfazer remover tarefa", Snackbar.LENGTH_LONG)
-                                            .setAction("UNDO", new View.OnClickListener() {
+                                            .setAction("Desfazer", new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View view) {
                                                     Snackbar snackbar1 = Snackbar.make(mRecyclerView, "Operacao de remover tarefa desfeita", Snackbar.LENGTH_SHORT);

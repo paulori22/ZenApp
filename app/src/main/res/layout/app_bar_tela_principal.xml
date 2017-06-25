@@ -19,7 +19,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_tela_principal" />
+    <include layout="@layout/content_tela_principal"
+        android:id="@+id/include" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_tarefa"
@@ -31,5 +32,22 @@
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <Button
+        android:id="@+id/buttonmenu"
+        android:layout_width="57dp"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/buttonpontos"
+        android:layout_width="29dp"
+        android:layout_height="58dp"
+        android:layout_gravity="top|left"
+        android:text="Button"
+        android:visibility="invisible"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="top|right" />
 
 </android.support.design.widget.CoordinatorLayout>

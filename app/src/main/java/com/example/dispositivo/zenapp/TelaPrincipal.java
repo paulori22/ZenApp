@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 public class TelaPrincipal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ClickRecyclerView_Interface {
@@ -56,6 +61,10 @@ public class TelaPrincipal extends AppCompatActivity
     private View mTarefaForm;
     private int numeroTarefasDiario;
     private int numeroTarefasSemanal;
+    private Button button0;
+    private Button button1;
+
+    private String SHOWCASE_ID = "teste";
 
     // UI references.
 
@@ -73,6 +82,7 @@ public class TelaPrincipal extends AppCompatActivity
         setatouch();
         listenersButtons();
         listenersSwipeable();
+        dica();
 
         this.setTitle("Tarefas Diárias");
 
@@ -210,6 +220,9 @@ public class TelaPrincipal extends AppCompatActivity
     public void setaButtons() {
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.add_tarefa);
+        button0 = (Button) findViewById(R.id.buttonmenu);
+        button1 = (Button) findViewById(R.id.buttonpontos);
+
 
 
     }
@@ -498,6 +511,30 @@ public class TelaPrincipal extends AppCompatActivity
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mTarefaForm.setVisibility(show ? View.GONE : View.VISIBLE);
         }
+    }
+
+    public void dica() {
+
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500); // half second between each showcase view
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, SHOWCASE_ID);
+
+        sequence.setConfig(config);
+
+        sequence.addSequenceItem(floatingActionButton,
+                "This is button one", "GOT IT");
+
+        sequence.addSequenceItem(button0,
+                "This is button two", "GOT IT");
+
+        sequence.addSequenceItem(button1,
+                "This is button three", "GOT IT");
+
+
+        sequence.start();
+
+
     }
 
 

@@ -50,4 +50,14 @@
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="top|right" />
 
+    <Button
+        android:id="@+id/buttonslide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="top|center_horizontal"
+        android:text="Button"
+        android:visibility="invisible"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="center_vertical|center_horizontal" />
+
 </android.support.design.widget.CoordinatorLayout>

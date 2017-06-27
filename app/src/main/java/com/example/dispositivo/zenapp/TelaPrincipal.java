@@ -63,6 +63,7 @@ public class TelaPrincipal extends AppCompatActivity
     private int numeroTarefasSemanal;
     private Button button0;
     private Button button1;
+    private Button button2;
 
     private String SHOWCASE_ID = "teste";
 
@@ -222,6 +223,7 @@ public class TelaPrincipal extends AppCompatActivity
         floatingActionButton = (FloatingActionButton) findViewById(R.id.add_tarefa);
         button0 = (Button) findViewById(R.id.buttonmenu);
         button1 = (Button) findViewById(R.id.buttonpontos);
+        button2 = (Button) findViewById(R.id.buttonslide);
 
 
 
@@ -516,21 +518,23 @@ public class TelaPrincipal extends AppCompatActivity
     public void dica() {
 
         ShowcaseConfig config = new ShowcaseConfig();
-        config.setDelay(500); // half second between each showcase view
+        config.setDelay(1000); // half second between each showcase view
 
         MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, SHOWCASE_ID);
 
         sequence.setConfig(config);
 
         sequence.addSequenceItem(floatingActionButton,
-                "This is button one", "GOT IT");
+                "Método ZTD:\n  3 tarefas por dia;\n  1 tarefa semanal;\nCumpra Suas metas!\nAqui você começa a usar o aplicativo.\n", "OK!");
 
         sequence.addSequenceItem(button0,
-                "This is button two", "GOT IT");
+                "Aqui, separamos suas tarefas.\nAcesse esse menu para se organizar melhor e definir o tipo de tarefa.\n", "OK!");
 
         sequence.addSequenceItem(button1,
-                "This is button three", "GOT IT");
+                "Aqui, classificamos suas tarefas.", "OK!");
 
+        sequence.addSequenceItem(button2,
+                "Ao cadastrar uma tarefa, ela aparecerá nesta tela.\nDeslize para a esquerda para mudar o tipo de tarefa.\nDeslize para a direita para excluí-la.\nVamos começar?\n", "OK!");
 
         sequence.start();
 
